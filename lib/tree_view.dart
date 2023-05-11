@@ -3,7 +3,6 @@ library tree_view;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class TreeView extends InheritedWidget {
   final List<Widget> children;
@@ -28,8 +27,7 @@ class TreeView extends InheritedWidget {
 
   @override
   bool updateShouldNotify(TreeView oldWidget) {
-    if (oldWidget.children == this.children &&
-        oldWidget.startExpanded == this.startExpanded) {
+    if (oldWidget.children == this.children && oldWidget.startExpanded == this.startExpanded) {
       return false;
     }
     return true;
@@ -87,8 +85,7 @@ class TreeViewChild extends StatefulWidget {
   }
 }
 
-class TreeViewChildState extends State<TreeViewChild>
-    with SingleTickerProviderStateMixin {
+class TreeViewChildState extends State<TreeViewChild> with SingleTickerProviderStateMixin {
   bool? isExpanded;
 
   @override
@@ -110,18 +107,15 @@ class TreeViewChildState extends State<TreeViewChild>
       children: <Widget>[
         RawGestureDetector(
           gestures: {
-            AllowMultipleGestureRecognizer:
-                GestureRecognizerFactoryWithHandlers<
-                        AllowMultipleGestureRecognizer>(
-                    () => AllowMultipleGestureRecognizer(),
-                    (AllowMultipleGestureRecognizer instance) {
+            AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<AllowMultipleGestureRecognizer>(
+                () => AllowMultipleGestureRecognizer(), (AllowMultipleGestureRecognizer instance) {
               instance.onTap = widget.onTap ?? () => toggleExpanded();
             }),
           },
           child: widget.parent,
         ),
         AnimatedSize(
-          vsync: this,
+          // vsync: this,
           curve: Curves.easeIn,
           duration: Duration(milliseconds: 400),
           child: isExpanded!
